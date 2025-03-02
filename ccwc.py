@@ -45,31 +45,36 @@ if __name__ == "__main__":
         "-l",
         "-w",
         "-m",
+        "-help",
         "default"
     ]
-
-
-
-
-    #Todo: build out --help function that displays valid commands to the user
 
     # Get users argument and file
     command = "default"
     file = ""
 
     # Check how many arguments are being passed
-    if len(sys.argv) > 3:
-        print("you are passing to many arguments only pass command and file name")
-    elif len(sys.argv) == 3:
+    if len(sys.argv) == 3:
         command = sys.argv[1].lower()
         file = sys.argv[2]
     else:
-        file = sys.argv[1]
+        if sys.argv[1] == '-help':
+            print('''
+>> List of valid commands:
+    -c: bytes .. Returns the number of bytes in the file
+    -l: lines .. Returns the number of lines in the file
+    -w: words .. Returns the number of words in the file
+    -m: characters .. Returns the number of characters in the file
+    ''')
+            sys.exit()
+        else:
+            file = sys.argv[1]
 
 
     # Check if user passed a valid argument
     if (command not in valid_commands_list) or not os.path.isfile(file):
         print("You entered an invalid argument")
+        print("If you need assistance please run '-help' for list of commands")
     else:
         if command == '-c':
             print(get_bytes(file), file_name(file))
