@@ -15,8 +15,6 @@ def get_bytes(text_file):
 
 # returns all the lines in the file
 def get_lines(text_file):
-    # Got error reading file added encoding to fix this error:
-    # UnicodeDecodeError: 'charmap' codec can't decode byte 0x9d in position 6673: character maps to <undefined>
     with open(text_file, 'r', encoding='UTF8') as f:
         lines = f.readlines()
     return lines
@@ -37,10 +35,8 @@ def count_word(text_file):
 def count_char(text_file):
     count = 0
     for line in get_lines(text_file):
-        for characters in line:
-            count = count + len(characters)
+        count += len(line) + line.count("\n")
     return count
-
 
 if __name__ == "__main__":
 
@@ -49,17 +45,28 @@ if __name__ == "__main__":
         "-c",
         "-l",
         "-w",
-        "-m"
+        "-m",
+        "default"
     ]
 
     #Todo: build out --help function that displays valid commands to the user
 
     # Get users argument and file
-    command = sys.argv[1].lower()
-    file = sys.argv[2]
+    command = "default"
+    file = ""
+
+    # Check how many arguments are being passed
+    if len(sys.argv) > 3:
+        print("you are passing to many arguments only pass command and file name")
+    elif len(sys.argv) == 3:
+        command = sys.argv[1].lower()
+        file = sys.argv[2]
+    else:
+        file = sys.argv[1]
+
 
     # Check if user passed a valid argument
-    if command not in valid_commands_list:
+    if (command not in valid_commands_list) or not os.path.isfile(file):
         print("You entered an invalid argument")
     else:
         if command == '-c':
@@ -70,3 +77,5 @@ if __name__ == "__main__":
             print(count_word(file), file_name(file))
         elif command == '-m':
             print(count_char(file), file_name(file))
+        else:
+            print(get_bytes(file), count_lines(file), count_word(file), file_name(file))
