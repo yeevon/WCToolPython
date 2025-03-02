@@ -1,7 +1,6 @@
 import sys
 import os
 
-#TODO: Create ccwc.bat file with correct paths if it doesn't exit
 #TODO: Create Py unit test
 
 # Return file name
@@ -37,22 +36,6 @@ def count_char(text_file):
     for line in get_lines(text_file):
         count += len(line) + line.count("\n")
     return count
-
-# create bat file if it doesn't exist
-def create_bat_if_missing():
-    bat_filename = "ccwc.bat"
-    python_path = os.path.join(os.getcwd(), "venv", "Scripts", "python.exe")
-    script_path = os.path.join(os.getcwd(), "ccwc.py")
-
-    bat_commands = [
-        "@echo off",
-        f'"{python_path}" "{script_path}" %*'
-    ]
-
-    if not os.path.exists(bat_filename):
-        with open(bat_filename, 'w') as f:
-            f.writelines(c + '\n' for c in bat_commands)
-
 
 if __name__ == "__main__":
 
