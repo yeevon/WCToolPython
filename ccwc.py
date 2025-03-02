@@ -1,6 +1,7 @@
 import sys
 import os
 
+#TODO: Future need to learn bat scripting to update script to pass values correctly
 #TODO: Create Py unit test
 
 # Return file name
@@ -38,7 +39,7 @@ def count_char(text_file):
     return count
 
 if __name__ == "__main__":
-
+    print(sys.argv)
     #List of commands user can use
     valid_commands_list = [
         "-c",
@@ -49,27 +50,22 @@ if __name__ == "__main__":
         "default"
     ]
 
-    # Get users argument and file
-    command = "default"
-    file = ""
-
-    # Check how many arguments are being passed
-    if len(sys.argv) == 3:
-        command = sys.argv[1].lower()
-        file = sys.argv[2]
+    # Get arguments being passed
+    if not sys.argv[-2].lower() :
+        command = "default"
     else:
-        if sys.argv[1] == '-help':
-            print('''
+        command = sys.argv[-2].lower()
+    file = sys.argv[-1]
+
+    if '-help' in sys.argv :
+        print('''
 >> List of valid commands:
     -c: bytes .. Returns the number of bytes in the file
     -l: lines .. Returns the number of lines in the file
     -w: words .. Returns the number of words in the file
     -m: characters .. Returns the number of characters in the file
     ''')
-            sys.exit()
-        else:
-            file = sys.argv[1]
-
+        sys.exit()
 
     # Check if user passed a valid argument
     if (command not in valid_commands_list) or not os.path.isfile(file):
