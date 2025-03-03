@@ -10,11 +10,16 @@ for %%A in (%*) do (
     if exist "%%A" (
         set "FILE_PATH=%%~fA"  REM Convert file path to absolute
     ) else (
-        set "ARGUMENTS=!ARGUMENTS! %%A"
+        if "ARGUMENTS"=="" (
+            set "ARGUMENTS=%%A"
+        ) else (
+            set "ARGUMENTS=!ARGUMENTS! %%A"
+        )
     )
 )
 
 REM Debugging output (uncomment to check values)
+REM echo !ARGUMENTS!
 
 REM Change to the script directory
 cd /d "%~dp0"

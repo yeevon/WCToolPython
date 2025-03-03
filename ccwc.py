@@ -1,7 +1,6 @@
 import sys
 import os
 
-#TODO: Future need to learn bat scripting to update script to pass values correctly
 #TODO: Create Py unit test
 
 # Return file name
@@ -39,7 +38,8 @@ def count_char(text_file):
     return count
 
 if __name__ == "__main__":
-    print(sys.argv)
+
+    command = 'default'
     #List of commands user can use
     valid_commands_list = [
         "-c",
@@ -51,11 +51,17 @@ if __name__ == "__main__":
     ]
 
     # Get arguments being passed
-    if not sys.argv[-2].lower() :
-        command = "default"
+    if len(sys.argv) > 3:
+        print(">> You are passing to many arguments")
+        print(">> Format: `ccwc -command filename`")
+        print(">> For list of valid commands enter `ccwc -help`")
+        sys.exit()
+    elif len(sys.argv) == 3:
+        command = sys.argv[1]
+        file = sys.argv[2]
     else:
-        command = sys.argv[-2].lower()
-    file = sys.argv[-1]
+        file = sys.argv[1]
+
 
     if '-help' in sys.argv :
         print('''
