@@ -25,6 +25,7 @@ def count_lines(text_file):
 # counts number of words in each line of the file
 def count_word(text_file):
     count = 0
+
     for line in get_lines(text_file):
         words = line.split()
         count = count + len(words)
